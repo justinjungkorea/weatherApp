@@ -10,7 +10,6 @@ export default class Weather extends Component{
             <StatusBar barStyle='light-content' />
             <View style={styles.upper}>
                 <Ionicons color='white' size={144} name="ios-rainy"/>
-                <Text>Icon here!</Text>
                 <Text style={styles.temp}>35</Text>
             </View>
             <View style={styles.lower}>
