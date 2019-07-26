@@ -1,25 +1,91 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import PropTypes from "prop-types";
 
-export default class Weather extends Component{
-    render(){
-        return (
-        <LinearGradient colors={["#00C6FB","#005BEA"]} style={styles.container}>
-            <StatusBar barStyle='light-content' />
-            <View style={styles.upper}>
-                <Ionicons color='white' size={144} name="ios-rainy"/>
-                <Text style={styles.temp}>35</Text>
-            </View>
-            <View style={styles.lower}>
-                <Text style={styles.title}>Raining</Text>
-                <Text style={styles.subtitle}>For more info</Text>
-            </View>
-        </LinearGradient>
-        );
-    }
+const weatherCases = {
+  Rain: {
+    colors: ["#00C6FB", "#005BEA"],
+    title: "비 오는 중",
+    subtitle: "더 많은 정보를 원한다면 밖을 보세요!",
+    icon: "weather-pouring"
+  },
+  Clear: {
+    colors: ["FEF253", "#FF7300"],
+    title: "맑은 날씨",
+    subtitle: "밖으로 나갑시다 그전에 미세먼지 확인!",
+    icon: "weather-sunny"
+  },
+  Thunderstorm: {
+    colors: ["00ECBC", "#007ADF"],
+    title: "폭풍우",
+    subtitle: "양말까지 젖을 거니까 조심하세요!",
+    icon: "weather-lightning-rainy"
+  },
+  Cloud: {
+    colors: ["#D7D2CC", "#304352"],
+    title: "흐림",
+    subtitle: "기분까지 우울해 하지는 마세요",
+    icon: "weather-cloudy"
+  },
+  Snow: {
+    colors: ["#7DE2FC", "#B9B6E5"],
+    title: "눈 오는 중",
+    subtitle: "길이 미끄러우니까 조심하세요",
+    icon: "weather-snowy"
+  },
+  Drizzle: {
+    colors: ["#89F7FE", "#66A6FF"],
+    title: "보슬 비가 내리는 중",
+    subtitle: "우산까지는 필요없어요",
+    icon: "weather-rainy"
+  },
+  Haze: {
+    colors: ["#89F7FE", "#66A6FF"],
+    title: "실안개",
+    subtitle: "우산까지는 필요없어요",
+    icon: "weather-fog"
+  },
+  Mist: {
+    colors: ["#89F7FE", "#66A6FF"],
+    title: "옅은 안개",
+    subtitle: "우산까지는 필요없어요",
+    icon: "weather-fog"
+  }
+};
+
+function Weather({ weatherName, temp }) {
+  return (
+    <LinearGradient
+      colors={weatherCases[weatherName].colors}
+      style={styles.container}
+    >
+      <StatusBar barStyle="light-content" />
+      <View style={styles.upper}>
+        <MaterialCommunityIcons
+          color="white"
+          size={144}
+          name={weatherCases[weatherName].icon}
+        />
+        <Text style={styles.temp}>{temp}°</Text>
+      </View>
+      <View style={styles.lower}>
+        <Text style={styles.title}>{weatherCases[weatherName].title}</Text>
+        <Text style={styles.subtitle}>
+          {weatherCases[weatherName].subtitle}
+        </Text>
+      </View>
+    </LinearGradient>
+  );
 }
+
+Weather.propTypes = {
+  temp: PropTypes.number.isRequired,
+  weatherName: PropTypes.string.isRequired
+}
+
+export default Weather;
 
 const styles = StyleSheet.create({
   container: {
